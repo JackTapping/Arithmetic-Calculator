@@ -1,13 +1,138 @@
 #include <IOstream> // Allows the use of cin and cout to get inputs and outputs 
 #include <conio.h> // Allows the use of _getch() to allow the program to wait for user input 
+#include <cmath> // Allows the use of sqrt to to get the squer root of a number 
 
 
+//Function 
+
+// will aske the use for 2 numbers then add them togeather 
+void Addition() {
+	float fNumOne, fNumTwo; // two ints to hold the users numbers
+
+	system("cls"); // usind this to clear the console window to make the program less clutered 
+
+	//getting numbers
+	std::cout << "Please enter in your first Number: ";
+	std::cin >> fNumOne;
+
+	std::cout << "Please enter in your second Number: ";
+	std::cin >> fNumTwo;
+	std::cout << std::endl;
+
+	//outputing result 
+	std::cout << fNumOne << "+" <<fNumTwo << "=" <<fNumOne + fNumTwo;
+}
+
+// subtract the second number from the first
+void Subtraction() {
+	float fNumOne, fNumTwo; // two ints to hold the users numbers
+
+	system("cls"); // usind this to clear the console window to make the program less clutered 
+
+	//getting numbers
+	std::cout << "Please enter in your first Number: ";
+	std::cin >> fNumOne;
+
+	std::cout << "Please enter in your second Number: ";
+	std::cin >> fNumTwo;
+	std::cout << std::endl;
+
+	//outputing result 
+	std::cout << fNumOne << "-" << fNumTwo << "=" << fNumOne - fNumTwo;
+}
+// will devied the first number by the second  
+void Devison() {
+	float fNumOne, fNumTwo; // two ints to hold the users numbers
+
+	system("cls"); 
+
+	//getting numbers
+	std::cout << "Please enter in your Numerator: ";
+	std::cin >> fNumOne;
+
+	std::cout << "Please enter in your Denumerator: ";
+	std::cin >> fNumTwo;
+	std::cout << std::endl;
+
+	//outputing result 
+	std::cout << fNumOne << "/" << fNumTwo << "=" << fNumOne / fNumTwo;
+}
+// will multiply two numbers
+void Multiplication() {
+	float fNumOne, fNumTwo; // two ints to hold the users numbers
+
+	system("cls"); 
+
+	//getting numbers
+	std::cout << "Please enter in your first Number: ";
+	std::cin >> fNumOne;
+
+	std::cout << "Please enter in your second Number: ";
+	std::cin >> fNumTwo;
+	std::cout << std::endl;
+
+	//outputing result 
+	std::cout << fNumOne << "*" << fNumTwo << "=" << fNumOne * fNumTwo;
+}
+// will give the user the area of thier rectangle
+void RectangleArea() {
+	float fNumOne, fNumTwo; // two ints to hold the users numbers
+
+	system("cls");  
+
+	//getting numbers
+	std::cout << "Please enter in the Legnth of the Rectanlge: ";
+	std::cin >> fNumOne;
+
+	std::cout << "Please enter in the width of the Rectangle: ";
+	std::cin >> fNumTwo;
+	std::cout << std::endl;
+
+	//outputing result 
+	std::cout << fNumOne << "*" << fNumTwo << "=" << fNumOne * fNumTwo;
+}
+// will give the user the are fo their triangle
+void TriangleArea() {
+	float fNumOne, fNumTwo; // two ints to hold the users numbers
+
+	system("cls"); 
+
+	//getting numbers
+	std::cout << "Please enter in the Legnth of the Base: ";
+	std::cin >> fNumOne;
+
+	std::cout << "Please enter in the Hight of the triangle: "; 
+	std::cin >> fNumTwo;
+	std::cout << std::endl;
+
+	//outputing result 
+	std::cout << "0.5*" << "(" <<fNumOne << "*" << fNumTwo << ")" << "=" << 0.5 * (fNumOne * fNumTwo);
+}
+
+// will give the user the are fo their triangle
+void Pythagorean() {
+	float fNumOne, fNumTwo; // two ints to hold the users numbers
+
+	system("cls");  
+
+	//getting numbers
+	std::cout << "Please enter in the Legnth of the first side of the Triangle: ";
+	std::cin >> fNumOne;
+
+	std::cout << "Please enter in the Legnth of the Second side of the Triangle: ";  
+		std::cin >> fNumTwo;
+	std::cout << std::endl;
+
+	//outputing result 
+	std::cout << fNumOne << "^2" << " +" << fNumTwo << "^2" << " "<< "=" << sqrt((fNumOne * fNumOne) + (fNumTwo * fNumTwo));
+}
 //Main method is were the computer will look to start the program 
 int main() {
 	std::cout << "Welcome to the Arithmatic Calculator" << "\n";
 	std::cout << "Press any key to continue..." << "\n" << "\n";
 
 	_getch();
+	system("cls"); 
 
 
 	//printing out the menu
@@ -25,25 +150,25 @@ int main() {
 
 	switch (cUserInput) {
 	case '1':
-		std::cout << "ADD" << "\n";
+		Addition();
 		break;
 	case '2':
-		std::cout << "SUB" << "\n";
+		Subtraction();
 		break;
 	case '3':
-		std::cout << "DIV" << "\n";
+		Devison();
 		break;
 	case '4':
-		std::cout << "MUL" << "\n";
+		Multiplication();
 		break;
 	case '5':
-		std::cout << "ARE REC" << "\n";
+		RectangleArea();
 		break;
 	case '6':
-		std::cout << "ARE TRI" << "\n";
+		TriangleArea();
 		break;
 	case '7':
-		std::cout << "PAG" << "\n";
+		Pythagorean();
 		break;
 	case 'e':
 	case 'E':

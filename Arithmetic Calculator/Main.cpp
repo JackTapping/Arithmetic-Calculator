@@ -2,9 +2,11 @@
 #include <conio.h> // Allows the use of _getch() to allow the program to wait for user input 
 #include <cmath> // Allows the use of sqrt to to get the squer root of a number 
 #include<Windows.h> // Allows me to change the console window size and text color  
+#include <stdlib.h> // gives access to the sleep fucntion 
 
 
-//Function 
+
+
 
 // changing the colour of the text based on an int paramneter 
 void ChangeTextColour(int iCoulorValue)
@@ -33,6 +35,21 @@ void ChangeConsoleWindowSize(int iXValue, int iYvalue)
 
 }
 
+void PrtinErrorMesage()
+{
+
+	system("cls");
+	ChangeConsoleWindowSize(200, 75);
+	ChangeTextColour(4);
+	std::cout << "Invalid Input";
+	Sleep(1000);
+	system("cls");
+
+	//clearing cin
+	std::cin.clear();
+	std::cin.ignore(INT_MAX, '\n');
+}
+
 // displlaying the intro to the user
 void Intro ()
 {
@@ -48,13 +65,21 @@ void Intro ()
 	std::cout << "##################################################";
 
 	_getch();
-	system("cls");
+	system("cls"); // clears the console window
 }
 
 // printing out the main menu to the user 
 void Menu()
 {
-	ChangeConsoleWindowSize(500, 225);
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "##############################";
+	ChangeTextColour(7);
+	std::cout << " MENU ";
+	ChangeTextColour(1);
+	std::cout << "############################\n\n";
+
+	ChangeTextColour(7);
 	//printing out the menu
 	std::cout << "Press 1: for Additon" << "\n";
 	std::cout << "Press 2: for Subtration" << "\n";
@@ -64,169 +89,542 @@ void Menu()
 	std::cout << "Press 6: for Area of a Triangle " << "\n";
 	std::cout << "Press 7: to Calculate the unknown side of a Right Angle Triangle  " << "\n";
 
-	ChangeTextColour(5);
-	std::cout << "Press E: to Exit the program " << "\n";
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 225);
+	std::cout << "##########################";
+	ChangeTextColour(7);
+	std::cout << " E to Exit ";
+	ChangeTextColour(1);
+	std::cout << "############################";	
+}
+
+bool MenuInputChecker(char cInput)
+{
+
+	system("cls"); 
+	bool bValid = false;
+
+	//holds all the vaild in puts for the menu 
+	char acValidInputs [9] = { '1', '2', '3','4','5','6','7','e','E'};
+
+	// cheking user input to the values in the array
+	for(int i  = 0; i < 9; i++)
+	{
+		if (cInput == acValidInputs[i]) bValid = true;
+	}
+
+	if (bValid)
+	{
+		return true;
+	}
+	else
+	{
+		PrtinErrorMesage();
+		return false;
+	}
+}
+
+// will hold a float and a bool so the function below can return both
+struct InputValues
+{
+	float fNumber;
+	bool bTrueOrFalse;
+};
+
+InputValues NumberInputChecker()
+{
+	// get users input
+	float fNumber;
+	std::cin >> fNumber;
+
+	// if the useres input is bad show error 
+	while (!std::cin.good())
+	{
+		PrtinErrorMesage();
+		return InputValues{ 0,false };
+	}
+
+	// if the useres input is good return input
+	return InputValues{fNumber,true };
 }
 
 // will aske the use for 2 numbers then add them togeather 
 void Addition() {
-	float fNumOne, fNumTwo; // two ints to hold the users numbers
+	
+	bool bInput = false;
+	float fNumOne = 0, fNumTwo = 0;
+	InputValues NumberInput;
 
-	system("cls"); // usind this to clear the console window to make the program less clutered 
+	do {
+		do
+		{
+			system("cls");
 
-	//getting numbers
-	std::cout << "Please enter in your first Number: ";
-	std::cin >> fNumOne;
+			ChangeTextColour(1);
+			ChangeConsoleWindowSize(500, 250);
+			std::cout << "#############################";
+			ChangeTextColour(7);
+			std::cout << " INPUTS ";
+			ChangeTextColour(1);
+			std::cout << "###########################\n\n";
+			ChangeTextColour(7);
 
-	std::cout << "Please enter in your second Number: ";
-	std::cin >> fNumTwo;
-	std::cout << std::endl;
+			std::cout << "Please enter in your First Number: ";
+			NumberInput = NumberInputChecker();
+			bInput = NumberInput.bTrueOrFalse;
+			fNumOne = NumberInput.fNumber;
+		} while (!bInput);
 
+		std::cout << "Please enter in your second Number: ";
+		NumberInput = NumberInputChecker();
+		bInput = NumberInput.bTrueOrFalse;
+		fNumTwo = NumberInput.fNumber;
+		std::cout << std::endl;
+
+	} while (!bInput);
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#############################";
+	ChangeTextColour(7);
+	std::cout << " Result ";
+	ChangeTextColour(1);
+	std::cout << "###########################\n\n";
+	ChangeTextColour(7);
+	
 	//outputing result 
-	std::cout << fNumOne << "+" <<fNumTwo << "=" <<fNumOne + fNumTwo;
-}
+	std::cout <<fNumOne << "+" << fNumTwo << "=" << fNumOne + fNumTwo << "\n\n";
 
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#########################";
+	ChangeTextColour(7);
+	std::cout << " Any Key For Menu ";
+	ChangeTextColour(1);
+	std::cout << "######################";
+	_getch();
+	ChangeTextColour(7);
+
+	
+}
 // subtract the second number from the first
 void Subtraction() {
-	float fNumOne, fNumTwo; // two ints to hold the users numbers
 
-	system("cls"); // usind this to clear the console window to make the program less clutered 
+	bool bInput = false;
+	float fNumOne = 0, fNumTwo = 0;
+	InputValues NumberInput;
 
-	//getting numbers
-	std::cout << "Please enter in your first Number: ";
-	std::cin >> fNumOne;
+	do {
+		do
+		{
+			system("cls");
 
-	std::cout << "Please enter in your second Number: ";
-	std::cin >> fNumTwo;
-	std::cout << std::endl;
+			ChangeTextColour(1);
+			ChangeConsoleWindowSize(500, 250);
+			std::cout << "#############################";
+			ChangeTextColour(7);
+			std::cout << " INPUTS ";
+			ChangeTextColour(1);
+			std::cout << "###########################\n\n";
+			ChangeTextColour(7);
+
+			std::cout << "Please enter in your First Number: ";
+			NumberInput = NumberInputChecker();
+			bInput = NumberInput.bTrueOrFalse;
+			fNumOne = NumberInput.fNumber;
+		} while (!bInput);
+
+		std::cout << "Please enter in your second Number: ";
+		NumberInput = NumberInputChecker();
+		bInput = NumberInput.bTrueOrFalse;
+		fNumTwo = NumberInput.fNumber;
+		std::cout << std::endl;
+
+	} while (!bInput);
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#############################";
+	ChangeTextColour(7);
+	std::cout << " Result ";
+	ChangeTextColour(1);
+	std::cout << "###########################\n\n";
+	ChangeTextColour(7);
 
 	//outputing result 
-	std::cout << fNumOne << "-" << fNumTwo << "=" << fNumOne - fNumTwo;
+	std::cout << fNumOne << "-" << fNumTwo << "=" << fNumOne - fNumTwo<< "\n\n";
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#########################";
+	ChangeTextColour(7);
+	std::cout << " Any Key For Menu ";
+	ChangeTextColour(1);
+	std::cout << "######################";
+	_getch();
+	ChangeTextColour(7);
+
+
+	
 }
 // will devied the first number by the second  
 void Devison() {
-	float fNumOne, fNumTwo; // two ints to hold the users numbers
+	bool bInput = false;
+	float fNumOne = 0, fNumTwo = 0;
+	InputValues NumberInput;
 
-	system("cls"); 
+	do {
+		do
+		{
+			system("cls");
 
-	//getting numbers
-	std::cout << "Please enter in your Numerator: ";
-	std::cin >> fNumOne;
+			ChangeTextColour(1);
+			ChangeConsoleWindowSize(500, 250);
+			std::cout << "#############################";
+			ChangeTextColour(7);
+			std::cout << " INPUTS ";
+			ChangeTextColour(1);
+			std::cout << "###########################\n\n";
+			ChangeTextColour(7);
 
-	std::cout << "Please enter in your Denumerator: ";
-	std::cin >> fNumTwo;
-	std::cout << std::endl;
+			std::cout << "Please enter in your Numerator: ";
+			NumberInput = NumberInputChecker();
+			bInput = NumberInput.bTrueOrFalse;
+			fNumOne = NumberInput.fNumber;
+		} while (!bInput);
+
+		std::cout << "Please enter in your Denumerator: ";
+		NumberInput = NumberInputChecker();
+		bInput = NumberInput.bTrueOrFalse;
+		fNumTwo = NumberInput.fNumber;
+		std::cout << std::endl;
+
+		if(fNumOne == 0|| fNumTwo == 0)
+		{
+			PrtinErrorMesage();
+			bInput = false;
+		}
+	} while (!bInput);
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#############################";
+	ChangeTextColour(7);
+	std::cout << " Result ";
+	ChangeTextColour(1);
+	std::cout << "###########################\n\n";
+	ChangeTextColour(7);
 
 	//outputing result 
-	std::cout << fNumOne << "/" << fNumTwo << "=" << fNumOne / fNumTwo;
+	std::cout << fNumOne << "/" << fNumTwo << "=" << fNumOne / fNumTwo << "\n\n";
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#########################";
+	ChangeTextColour(7);
+	std::cout << " Any Key For Menu ";
+	ChangeTextColour(1);
+	std::cout << "######################";
+	_getch();
+	ChangeTextColour(7);
+	
 }
 // will multiply two numbers
 void Multiplication() {
-	float fNumOne, fNumTwo; // two ints to hold the users numbers
+	bool bInput = false;
+	float fNumOne = 0, fNumTwo = 0;
+	InputValues NumberInput;
 
-	system("cls"); 
+	do {
+		do
+		{
+			system("cls");
 
-	//getting numbers
-	std::cout << "Please enter in your first Number: ";
-	std::cin >> fNumOne;
+			ChangeTextColour(1);
+			ChangeConsoleWindowSize(500, 250);
+			std::cout << "#############################";
+			ChangeTextColour(7);
+			std::cout << " INPUTS ";
+			ChangeTextColour(1);
+			std::cout << "###########################\n\n";
+			ChangeTextColour(7);
 
-	std::cout << "Please enter in your second Number: ";
-	std::cin >> fNumTwo;
-	std::cout << std::endl;
+			std::cout << "Please enter in your First Number: ";
+			NumberInput = NumberInputChecker();
+			bInput = NumberInput.bTrueOrFalse;
+			fNumOne = NumberInput.fNumber;
+		} while (!bInput);
+
+		std::cout << "Please enter in your Second Number: ";
+		NumberInput = NumberInputChecker();
+		bInput = NumberInput.bTrueOrFalse;
+		fNumTwo = NumberInput.fNumber;
+		std::cout << std::endl;
+
+	} while (!bInput);
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#############################";
+	ChangeTextColour(7);
+	std::cout << " Result ";
+	ChangeTextColour(1);
+	std::cout << "###########################\n\n";
+	ChangeTextColour(7);
 
 	//outputing result 
-	std::cout << fNumOne << "*" << fNumTwo << "=" << fNumOne * fNumTwo;
+	std::cout << fNumOne << "*" << fNumTwo << "=" << fNumOne * fNumTwo << "\n\n";
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#########################";
+	ChangeTextColour(7);
+	std::cout << " Any Key For Menu ";
+	ChangeTextColour(1);
+	std::cout << "######################";
+	_getch();
+	ChangeTextColour(7);
+	
 }
 // will give the user the area of thier rectangle
 void RectangleArea() {
-	float fNumOne, fNumTwo; // two ints to hold the users numbers
+	bool bInput = false;
+	float fNumOne = 0, fNumTwo = 0;
+	InputValues NumberInput;
 
-	system("cls");  
+	do {
+		do
+		{
+			system("cls");
 
-	//getting numbers
-	std::cout << "Please enter in the Legnth of the Rectanlge: ";
-	std::cin >> fNumOne;
+			ChangeTextColour(1);
+			ChangeConsoleWindowSize(500, 250);
+			std::cout << "#############################";
+			ChangeTextColour(7);
+			std::cout << " INPUTS ";
+			ChangeTextColour(1);
+			std::cout << "###########################\n\n";
+			ChangeTextColour(7);
 
-	std::cout << "Please enter in the width of the Rectangle: ";
-	std::cin >> fNumTwo;
-	std::cout << std::endl;
+			std::cout << "Please enter in the Lenght of the Rectangle: ";
+			NumberInput = NumberInputChecker();
+			bInput = NumberInput.bTrueOrFalse;
+			fNumOne = NumberInput.fNumber;
+		} while (!bInput);
+
+		std::cout << "Please enter in the Width of the Rectangle: ";
+		NumberInput = NumberInputChecker();
+		bInput = NumberInput.bTrueOrFalse;
+		fNumTwo = NumberInput.fNumber;
+		std::cout << std::endl;
+
+	} while (!bInput);
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#############################";
+	ChangeTextColour(7);
+	std::cout << " Result ";
+	ChangeTextColour(1);
+	std::cout << "###########################\n\n";
+	ChangeTextColour(7);
 
 	//outputing result 
-	std::cout << fNumOne << "*" << fNumTwo << "=" << fNumOne * fNumTwo;
+	std::cout << fNumOne << "*" << fNumTwo << "=" << fNumOne * fNumTwo << "\n\n";
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#########################";
+	ChangeTextColour(7);
+	std::cout << " Any Key For Menu ";
+	ChangeTextColour(1);
+	std::cout << "######################";
+	_getch();
+	ChangeTextColour(7);
 }
 // will give the user the are fo their triangle
 void TriangleArea() {
-	float fNumOne, fNumTwo; // two ints to hold the users numbers
+	bool bInput = false;
+	float fNumOne = 0, fNumTwo = 0;
+	InputValues NumberInput;
 
-	system("cls"); 
+	do {
+		do
+		{
+			system("cls");
 
-	//getting numbers
-	std::cout << "Please enter in the Legnth of the Base: ";
-	std::cin >> fNumOne;
+			ChangeTextColour(1);
+			ChangeConsoleWindowSize(500, 250);
+			std::cout << "#############################";
+			ChangeTextColour(7);
+			std::cout << " INPUTS ";
+			ChangeTextColour(1);
+			std::cout << "###########################\n\n";
+			ChangeTextColour(7);
 
-	std::cout << "Please enter in the Hight of the triangle: "; 
-	std::cin >> fNumTwo;
-	std::cout << std::endl;
+			std::cout << "Please enter in the Lenght of the base: ";
+			NumberInput = NumberInputChecker();
+			bInput = NumberInput.bTrueOrFalse;
+			fNumOne = NumberInput.fNumber;
+		} while (!bInput);
+
+		std::cout << "Please enter in the Hight of the triangle: ";
+		NumberInput = NumberInputChecker();
+		bInput = NumberInput.bTrueOrFalse;
+		fNumTwo = NumberInput.fNumber;
+		std::cout << std::endl;
+
+	} while (!bInput);
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#############################";
+	ChangeTextColour(7);
+	std::cout << " Result ";
+	ChangeTextColour(1);
+	std::cout << "###########################\n\n";
+	ChangeTextColour(7);
 
 	//outputing result 
-	std::cout << "0.5*" << "(" <<fNumOne << "*" << fNumTwo << ")" << "=" << 0.5 * (fNumOne * fNumTwo);
+	std::cout << "0.5*" << "(" << fNumOne << "*" << fNumTwo << ")" << "=" << 0.5 * (fNumOne * fNumTwo);
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#########################";
+	ChangeTextColour(7);
+	std::cout << " Any Key For Menu ";
+	ChangeTextColour(1);
+	std::cout << "######################";
+	_getch();
+	ChangeTextColour(7);
+
+	
 }
 
 // will give the user the are fo their triangle
 void Pythagorean() {
-	float fNumOne, fNumTwo; // two ints to hold the users numbers
+	bool bInput = false;
+	float fNumOne = 0, fNumTwo = 0;
+	InputValues NumberInput;
 
-	system("cls");  
+	do {
+		do
+		{
+			system("cls");
 
-	//getting numbers
-	std::cout << "Please enter in the Legnth of the first side of the Triangle: ";
-	std::cin >> fNumOne;
+			ChangeTextColour(1);
+			ChangeConsoleWindowSize(500, 250);
+			std::cout << "#############################";
+			ChangeTextColour(7);
+			std::cout << " INPUTS ";
+			ChangeTextColour(1);
+			std::cout << "###########################\n\n";
+			ChangeTextColour(7);
 
-	std::cout << "Please enter in the Legnth of the Second side of the Triangle: ";  
-		std::cin >> fNumTwo;
-	std::cout << std::endl;
+			std::cout << "Please enter in the Lenght of the First side: ";
+			NumberInput = NumberInputChecker();
+			bInput = NumberInput.bTrueOrFalse;
+			fNumOne = NumberInput.fNumber;
+		} while (!bInput);
+
+		std::cout << "Please enter in the Length of the Second side: ";
+		NumberInput = NumberInputChecker();
+		bInput = NumberInput.bTrueOrFalse;
+		fNumTwo = NumberInput.fNumber;
+		std::cout << std::endl;
+
+	} while (!bInput);
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#############################";
+	ChangeTextColour(7);
+	std::cout << " Result ";
+	ChangeTextColour(1);
+	std::cout << "###########################\n\n";
+	ChangeTextColour(7);
 
 	//outputing result 
-	std::cout << fNumOne << "^2" << " +" << fNumTwo << "^2" << " "<< "=" << sqrt((fNumOne * fNumOne) + (fNumTwo * fNumTwo));
+	std::cout << fNumOne << "^2" << " +" << fNumTwo << "^2" << " " << "=" << sqrt((fNumOne * fNumOne) + (fNumTwo * fNumTwo));
+
+	ChangeTextColour(1);
+	ChangeConsoleWindowSize(500, 250);
+	std::cout << "#########################";
+	ChangeTextColour(7);
+	std::cout << " Any Key For Menu ";
+	ChangeTextColour(1);
+	std::cout << "######################";
+	_getch();
+	ChangeTextColour(7);
+	
 }
+
 //Main method is were the computer will look to start the program 
 int main() {
 
 	Intro();
-	Menu();
+	
+	char cUserInput; //variable to holde the users in put 
+	bool bCorrectInput = false;
+
+	do
+	{
+
+		do
+		{
+			//Re printing the menu untill the user selects a valid input
+			Menu();
+			cUserInput = _getch(); // getting the users input 
+			bCorrectInput = MenuInputChecker(cUserInput);
+		} while (!bCorrectInput);
+
+		// calling fucntion based on user input 
+		switch (cUserInput) {
+		case '1':
+			Addition();
+			break;
+		case '2':
+			Subtraction();
+			break;
+		case '3':
+			Devison();
+			break;
+		case '4':
+			Multiplication();
+			break;
+		case '5':
+			RectangleArea();
+			break;
+		case '6':
+			TriangleArea();
+			break;
+		case '7':
+			Pythagorean();
+			break;
+		case 'e':
+		case 'E':
+			system("cls");
+			ChangeConsoleWindowSize(400, 150);
+			ChangeTextColour(7);
+
+			std::cout << "##################################################\n\n";
+			ChangeTextColour(1);
+			std::cout << "   Thank you for using  the Arithmatic Calculator" << "\n";
+			std::cout << " \t     Press any key to continue..." << "\n" << "\n";
+			ChangeTextColour(7);
+			std::cout << "##################################################";
+
+			_getch();
+			system("cls"); 
+			return 0; // if every thing works fine the comuter will return a 0 at the end of the program 
+			break;
+		}
+	} while (true);
+	
+	
+	
 
 	
 
-	char cUserInput; //variable to holde the users in put 
-	cUserInput = _getch(); // getting the users input 
-
-	switch (cUserInput) {
-	case '1':
-		Addition();
-		break;
-	case '2':
-		Subtraction();
-		break;
-	case '3':
-		Devison();
-		break;
-	case '4':
-		Multiplication();
-		break;
-	case '5':
-		RectangleArea();
-		break;
-	case '6':
-		TriangleArea();
-		break;
-	case '7':
-		Pythagorean();
-		break;
-	case 'e':
-	case 'E':
-		std::cout << "EXIT" << "\n";
-		break;
-	}
-
-	return 0; // if every thing works fine the comuter will return a 0 at the end of the program 
+	
 }
